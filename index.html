@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+            margin: 0;
+        }
+
+        #quiz-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .question {
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+    </style>
+    <title>MCQ Quiz</title>
+</head>
+<body>
+    <div id="quiz-container">
+        <div class="question">
+            <p>Question 1: What is the capital of France?</p>
+            <label><input type="radio" name="q1" value="Paris"> Paris</label>
+            <label><input type="radio" name="q1" value="Berlin"> Berlin</label>
+            <label><input type="radio" name="q1" value="London"> London</label>
+        </div>
+
+        <div class="question">
+            <p>Question 2: What is the largest planet in our solar system?</p>
+            <label><input type="radio" name="q2" value="Mars"> Mars</label>
+            <label><input type="radio" name="q2" value="Jupiter"> Jupiter</label>
+            <label><input type="radio" name="q2" value="Venus"> Venus</label>
+        </div>
+
+        <div class="question">
+            <p>Question 3: Which programming language is used for web development?</p>
+            <label><input type="radio" name="q3" value="Python"> Python</label>
+            <label><input type="radio" name="q3" value="Java"> Java</label>
+            <label><input type="radio" name="q3" value="JavaScript"> JavaScript</label>
+        </div>
+
+        <button id="submitBtn" disabled onclick="submitQuiz()">Submit</button>
+    </div>
+
+    <script>
+        function submitQuiz() {
+            const score = calculateScore();
+            alert(`Your score is: ${score}`);
+        }
+
+        function calculateScore() {
+            let score = 0;
+            const answers = ['Paris', 'Jupiter', 'JavaScript'];
+
+            for (let i = 1; i <= 3; i++) {
+                const selectedAnswer = document.querySelector('input[name="q${i}"]:checked');
+                if (selectedAnswer && selectedAnswer.value === answers[i - 1]) {
+                    score++;
+                }
+            }
+
+            return score;
+        }
+
+        document.addEventListener('change', function () {
+            const submitBtn = document.getElementById('submitBtn');
+            const allQuestionsAnswered =
+                document.querySelector('input[name="q1"]:checked') &&
+                document.querySelector('input[name="q2"]:checked') &&
+                document.querySelector('input[name="q3"]:checked');
+               
+
+            submitBtn.disabled = !allQuestionsAnswered;
+        });
+    </script>
+</body>
+</html>
